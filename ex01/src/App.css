@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Poor+Story&family=Sunflower:wght@300&display=swap');
+
+.App {
+  text-align: center;
+  margin-top: 50px;
+}
+
+
+* {
+  font-family: "Poor Story", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.ellipsis1 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.bookSearch .title{
+  font-size:15px;
+}
