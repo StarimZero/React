@@ -4,7 +4,7 @@
     font-family: "Jua", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size:large;
+    font-size:x-large;
 }
 
 .ellipsis1 {
@@ -16,7 +16,7 @@
 }
 
 .bookSearch .title {
-    font-size: 18px;
+    font-size: 15px;
     color: black
 }
 
@@ -26,4 +26,16 @@
 
 .userLogin .title{
     width : 20%;
+}
+
+.bookSearch .cart{
+    width : auto;
+    height: auto;
+    font-size: 30px;
+    cursor: pointer;
+    color: dodgerblue;
+}
+
+.bookSearch .cart:hover{
+    color:red;
 }

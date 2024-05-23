@@ -7,7 +7,7 @@ const ModalMap = ({local}) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const {place_name, address_name, x, y, phone, place_url, category_group_name    } = local;
+    const { place_name, address_name, x, y, phone, place_url, category_group_name } = local;
   
     return (
         <>
