@@ -35,7 +35,7 @@ const MenuPage = () => {
         <>
             <Navbar expand="lg" className="bg-success">
             <Container fluid>
-                <Navbar.Brand href="/">🍔🧇🥠🥟</Navbar.Brand>
+                <Navbar.Brand href="/">📔📕📖📗📘📙📚📓📒</Navbar.Brand>
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                 <Nav
@@ -43,14 +43,14 @@ const MenuPage = () => {
                     style={{ maxHeight: '100px' }}
                     navbarScroll
                 >
-                    <Nav.Link href="#action1">도서검색</Nav.Link>
-                    <Nav.Link href="#action2">도서목록</Nav.Link>
+                    <Nav.Link href="/books/search">도서검색</Nav.Link>
+                    <Nav.Link href="/books/list">도서목록</Nav.Link>
                 </Nav>
                 
                 {uid ?
                 <>
                 <Nav>
-                    <Nav.Link href="/users/mypage" className='active'>{uid}({user.uname})님 환영합니다.</Nav.Link>
+                    <Nav.Link href="/users/mypage" className='active' style={{color:"white"}}>{uid}({user.uname})님 환영합니다.</Nav.Link>
                 </Nav>
                 <Nav>
                     <Nav.Link href="#" onClick={onClickLogout}>로그아웃</Nav.Link>

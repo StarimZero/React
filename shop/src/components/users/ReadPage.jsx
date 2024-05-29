@@ -13,9 +13,10 @@ const ReadPage = () => {
         uname : "",
         phone : "",
         add1 : "",
-        add2 : ""
+        add2 : "",
+        photo : ""
     });
-    const {uname, phone, add1, add2} = form; //비구조할당
+    const {uname, phone, add1, add2, photo} = form; //비구조할당
 
 
 
@@ -57,17 +58,15 @@ const ReadPage = () => {
 
   return (
     <Row className='justify-content-center my-5 readPage'>
-        <Col>
-            <ModalPhoto uid={uid} form={form} callAPI={callAPI} setForm={setForm} photo={form.photo}/>
-        </Col>
-        <Col lg={8} >
+        <Col lg={10} >
             <Card>
                 <Card.Header>
                     <h3 className='text-center'>마이페이지</h3>
                 </Card.Header>
                 <Card.Body>
-                    
-                    <form onSubmit={onSubmit}>
+                    <Row>
+                        <Col lg={4} md={6} sm={12}><ModalPhoto uid={uid} form={form} callAPI={callAPI} setForm={setForm} photo={photo}/></Col>
+                        <Col>                    <form onSubmit={onSubmit}>
                         <InputGroup className='mb-2'>
                             <InputGroup.Text className='title justify-content-center'>이름</InputGroup.Text>  
                             <Form.Control name='uname' value={uname} onChange={onChangeForm} />
@@ -88,11 +87,10 @@ const ReadPage = () => {
                             <Button className='m-2' variant='outline-danger' size='sm'onClick={callAPI} >다시쓰기</Button>
                             <Button variant='outline-success'size='sm' type='submit'>수정하기</Button>
                         </div>
-                    </form>
+                    </form></Col>
+                    </Row>
                 </Card.Body>
             </Card>
-        </Col>
-        <Col>
         </Col>
     </Row>
   )
