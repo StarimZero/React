@@ -45,6 +45,7 @@ const MenuPage = () => {
                 >
                     <Nav.Link href="/books/search">도서검색</Nav.Link>
                     <Nav.Link href="/books/list">도서목록</Nav.Link>
+                    <Nav.Link href="/books/temp">예비</Nav.Link>
                 </Nav>
                 
                 {uid ?

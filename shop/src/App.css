@@ -64,3 +64,11 @@
   margin: 1%;
 }
 
+.ThumbsN{
+    color : dodgerblue;
+    cursor: pointer;
+}
+.ThumbsF{
+    color : dodgerblue;
+    cursor: pointer;
+}
