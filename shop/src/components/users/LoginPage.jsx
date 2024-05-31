@@ -33,8 +33,11 @@ const LoginPage = () => {
         }else if(result ===1){
             alert("로그인 하였습니다.")
             sessionStorage.setItem("uid", uid);
-            navi("/")
-
+            if(sessionStorage.getItem("target")){
+                navi(sessionStorage.getItem("target"));
+            }else{
+                navi("/")
+            }
         }
         
     }

@@ -7,6 +7,8 @@ import SearchPage from './books/SearchPage'
 import ListPage from './books/ListPage'
 import Temp from './books/Temp'
 import UpdatePage from './books/UpdatePage'
+import BookReadPage from './books/ReadPage'
+
 
 
 const RouterPage = () => {
@@ -19,6 +21,7 @@ const RouterPage = () => {
         <Route path="/books/list" element={<ListPage/>}/>
         <Route path="books/update/:bid" element={<UpdatePage/>}/>
         <Route path="/books/temp/" element={<Temp/>}/>
+        <Route path="/books/read/:bid" element={<BookReadPage/>}/>
     </Routes>
   )
   

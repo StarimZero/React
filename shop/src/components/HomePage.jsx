@@ -48,6 +48,14 @@ const HomePage = () => {
         }
     }
 
+    const onClickCancel = async (bid) =>{
+        const res = await axios.post("/books/likes/delete", {uid, bid});
+        if(res.data.result===1){
+            callAPI();
+        }
+        
+    }
+
     return (
         <div className='my-4'>
             <Row className='justify-content-end'>
@@ -74,7 +82,9 @@ const HomePage = () => {
                     <Col key={book.bid} xs={6} lg={2}>
                         <Card>
                             <Card.Body>
-                                <img src={book.image} width="100%"/>
+                                <a href={`/books/read/${book.bid}`}>
+                                <img src={book.image} width="100%" ucnt={book.ucnt} lcnt={book.lcnt}/>
+                                </a>
                             </Card.Body>
                             <Card.Footer>
                                 <Row>
@@ -97,7 +107,7 @@ const HomePage = () => {
                                         {book.ucnt === 0 ? 
                                         <FaRegThumbsUp className='ThumbsN' size="80%" onClick={()=>onClickLike(book.bid)}/>
                                         :
-                                        <FaThumbsUp className='ThumbsF'size="80%" />
+                                        <FaThumbsUp className='ThumbsF'size="80%" onClick={()=>onClickCancel(book.bid)} />
                                         }
                                         <span style={{fontSize: "40px"}}className='align-middle'>{book.lcnt}</span>
                                     </Col>
