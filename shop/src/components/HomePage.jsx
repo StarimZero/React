@@ -5,6 +5,8 @@ import Pagination from 'react-js-pagination';
 import './Paging.css'
 import { FaRegThumbsUp } from "react-icons/fa6";
 import { FaThumbsUp } from "react-icons/fa6";
+import { FaComment } from "react-icons/fa";
+
 
 
 
@@ -104,12 +106,14 @@ const HomePage = () => {
                                 </Row>
                                 <Row>
                                     <Col>
+                                        <FaComment className='' />
+                                        <span className='me-4' style={{fontSize: "20px"}}>{book.rcnt}</span>
                                         {book.ucnt === 0 ? 
-                                        <FaRegThumbsUp className='ThumbsN' size="80%" onClick={()=>onClickLike(book.bid)}/>
+                                        <FaRegThumbsUp className='ThumbsN' onClick={()=>onClickLike(book.bid)}/>
                                         :
-                                        <FaThumbsUp className='ThumbsF'size="80%" onClick={()=>onClickCancel(book.bid)} />
+                                        <FaThumbsUp className='ThumbsF' onClick={()=>onClickCancel(book.bid)} />
                                         }
-                                        <span style={{fontSize: "40px"}}className='align-middle'>{book.lcnt}</span>
+                                        <span style={{fontSize: "20px"}}className='align-middle'>{book.lcnt}</span>
                                     </Col>
                                 </Row>
                             </Card.Footer>

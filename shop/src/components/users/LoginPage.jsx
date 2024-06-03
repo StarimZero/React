@@ -1,10 +1,13 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { InputGroup, Form, Card, Button, Col, Row } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
+import { CountContext } from '../CountContext';
+
 
 const LoginPage = () => {
 
+    const {callAPICount} = useContext(CountContext);
     const navi = useNavigate();
     const [form, setForm] = useState({
         uid : "red",
@@ -33,13 +36,13 @@ const LoginPage = () => {
         }else if(result ===1){
             alert("로그인 하였습니다.")
             sessionStorage.setItem("uid", uid);
+            callAPICount();
             if(sessionStorage.getItem("target")){
                 navi(sessionStorage.getItem("target"));
             }else{
                 navi("/")
             }
         }
-        
     }
 
 

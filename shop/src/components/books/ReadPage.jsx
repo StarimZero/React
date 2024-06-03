@@ -1,15 +1,16 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Row, Col, Card, Button, Tab, Tabs } from 'react-bootstrap'
 import { useLocation, useParams } from 'react-router-dom'
 import { FaRegThumbsUp } from "react-icons/fa6";
 import { FaThumbsUp } from "react-icons/fa6";
 import ReviewPage from './ReviewPage';
 import ChangePage from './ChangePage';
-
+import { CountContext } from '../CountContext';
 
 const ReadPage = () => {
     
+    const {count, setCount} = useContext(CountContext);
     const {pathname} = useLocation();
     console.log(pathname);
 
@@ -33,7 +34,7 @@ const ReadPage = () => {
 
     const {author, title, bigimage, contents, isbn, publisher, updateDate, regDate, fmtdate, fmtprice, price, ucnt, lcnt} = book;
     const uid = sessionStorage.getItem("uid")
-    const{bid} = useParams();
+    const {bid} = useParams();
     const callAPI = async () =>{
         const res = await axios.get(`/books/read/${bid}?uid=${uid}`);
         console.log(res.data);
@@ -69,6 +70,29 @@ const ReadPage = () => {
         }
     }
 
+    const onClickCart = async () =>{
+        if(!sessionStorage.getItem("uid")){
+            sessionStorage.setItem("target", pathname);
+            window.location.href="/users/login";
+        }
+        //장바구니넣기
+        const res = await axios.post("/cart/insert", {uid:sessionStorage.getItem("uid"), bid});
+        let message ="";
+        if(res.data.result===1){
+            message="장바구니에 넣었습니다."
+            setCount(count+1);
+        }else{
+            message="장바구니에 이미 있는 상품입니다."
+        }
+        if(window.confirm(`${message} \n쇼핑을 계속 하시겠습니까?`)){
+            window.location.href="/";
+        }else{
+            window.location.href="/orders/cart"
+        }
+
+        
+    }
+
   return (
     <Row className='my-5 justify-content-center'>
         <Col>
@@ -100,7 +124,7 @@ const ReadPage = () => {
                             <div>머선129 : {updateDate}</div>
                             <div className='text-end mt-2'>
                                 <Button size='sm' className='me-2' variant='outline-warning' style={{float: "left"}}>찜하기</Button>
-                                <Button size='sm' className='me-2' variant='outline-info'>장바구니</Button>
+                                <Button size='sm' className='me-2' variant='outline-info' onClick={onClickCart}>장바구니</Button>
                                 <Button size='sm' className='' variant='outline-primary'>구매</Button>
                             </div>
 

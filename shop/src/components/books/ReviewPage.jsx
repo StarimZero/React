@@ -26,11 +26,10 @@ const ReviewPage = ({bid}) => {
             setReviews([]);
         }else{
             setCount(res.data.count);
+            if(page>Math.ceil(res.data.count/size)) setPage(page-1);
+            const data = res.data.documents.map(doc=>doc && {...doc, ellip:true, isEdit:false, text:doc.contents})
+            setReviews(data);
         }
-        setCount(res.data.count);
-        if(page>Math.ceil(res.data.count/size)) setPage(page-1);
-        const data = res.data.documents.map(doc=>doc && {...doc, ellip:true, isEdit:false, text:doc.contents})
-        setReviews(data);
     }
     
     
@@ -82,9 +81,13 @@ const ReviewPage = ({bid}) => {
         setReviews(data);
     }
 
-    const onClickCancel = (rid) =>{
-        const data = reviews.map(doc=>doc.rid===rid ? {...doc, isEdit:false, contents:doc.text} : doc);
-        setReviews(data);
+    const onClickCancel = (rid, contents, text) =>{
+        if(contents!==text){
+            if(!window.confirm("수정을 취소하시겠습니까?")) return;
+        }else{
+            const data = reviews.map(doc=>doc.rid===rid ? {...doc, isEdit:false, contents:doc.text} : doc);
+            setReviews(data);
+        }
     }
 
     const onClickSave = async (rid, contents) => {
@@ -148,7 +151,7 @@ const ReviewPage = ({bid}) => {
                         {(uid===r.uid && r.isEdit) &&
                             <Col className='text-end'>
                                 <Button size="sm" className='me-2' variant='outline-info' onClick={()=>onClickSave(r.rid, r.contents)}>수정등록</Button>
-                                <Button size="sm" onClick={()=>onClickCancel(r.rid)} variant='outline-danger'>다시쓰기</Button>
+                                <Button size="sm" onClick={()=>onClickCancel(r.rid, r.contents, r.text)} variant='outline-danger'>다시쓰기</Button>
                             </Col>
                         }
                     </Row>
