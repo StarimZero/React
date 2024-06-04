@@ -42,6 +42,8 @@ const LocalSearch = () => {
         setPage(1);
         setSize(e.target.value);
     }
+
+    
   return (
     <div className='my-5'>
         <h1 className='text-center my5'>지역검색</h1>

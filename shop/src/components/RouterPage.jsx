@@ -9,6 +9,7 @@ import Temp from './books/Temp'
 import UpdatePage from './books/UpdatePage'
 import BookReadPage from './books/ReadPage'
 import CartPage from './orders/CartPage'
+import OrderList from './orders/OrderList'
 
 
 
@@ -24,6 +25,7 @@ const RouterPage = () => {
         <Route path="/books/temp/" element={<Temp/>}/>
         <Route path="/books/read/:bid" element={<BookReadPage/>}/>
         <Route path="/orders/cart" element={<CartPage/>}/>
+        <Route path="/orders/list" element={<OrderList/>}/>
     </Routes>
   )
   

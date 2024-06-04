@@ -10,8 +10,8 @@ const LoginPage = () => {
     const {callAPICount} = useContext(CountContext);
     const navi = useNavigate();
     const [form, setForm] = useState({
-        uid : "red",
-        upass:"red"
+        uid : "admin",
+        upass:"admin"
     });
     const {uid, upass} = form;
     const onChangeForm = (e) => {
@@ -39,8 +39,10 @@ const LoginPage = () => {
             callAPICount();
             if(sessionStorage.getItem("target")){
                 navi(sessionStorage.getItem("target"));
+                window.location.reload();
             }else{
                 navi("/")
+                window.location.reload();
             }
         }
     }

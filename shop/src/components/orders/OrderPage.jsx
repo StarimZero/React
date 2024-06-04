@@ -58,8 +58,12 @@ const OrderPage = ({books, setBooks}) => {
                     await axios.post("/cart/delete", {uid, bid:book.bid}); //장바구니에서 삭제
                 }
             });
-            alert("주문이 완료되었습니다.")
-            window.location.href="/";
+            // alert("주문이 완료되었습니다.")
+            // window.location.href="/";
+            setTimeout(() => {
+                alert('주문이 완료되었습니다.');
+                window.location.href = '/';
+            }, 500);
         }else{
             alert("주문자 정보 저장 오류")
         }

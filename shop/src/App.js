@@ -6,6 +6,7 @@ import TopPage from './components/TopPage';
 import { Container } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { CountContext } from './components/CountContext';
+import AdminMenu from './components/AdminMenu';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -22,7 +23,11 @@ function App() {
     <CountContext.Provider value={{count, setCount, callAPICount}}>
       <Container>
           <TopPage/>
+          {sessionStorage.getItem('uid')==="admin"?
+          <AdminMenu/>
+          :
           <MenuPage/>
+          }
           <hr/>
           <BottomPage/>
       </Container>
