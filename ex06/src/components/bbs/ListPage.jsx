@@ -77,7 +77,7 @@ const ListPage = () => {
                         <td width="60%">
                             <div className='ellipsis1'>
                             <a href={`/bbs/read/${bbs.bid}`} style={{ textDecoration: 'none', color: 'white' }}>
-                            {bbs.title}
+                            {bbs.title} ({bbs.replycnt})
                             </a>
                             </div>
                         </td>

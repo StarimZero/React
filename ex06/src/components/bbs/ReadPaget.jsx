@@ -2,8 +2,11 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Row, Col, Card, CardBody, CardHeader, Button, CardFooter, Container} from 'react-bootstrap'
+import ReplyPage from './ReplyPage';
 
 const ReadPaget = () => {
+
+
 
     const {bid} = useParams();
     const [form, setForm] = useState('');
@@ -37,7 +40,7 @@ const ReadPaget = () => {
                         <CardHeader className='text-center'>
                             <Row>
                                 <Col style={{ width: '90%', flex: '0 0 75%' }} className='text-end'>[{bid}] {form.title} </Col>
-                                <Col style={{width: '5%'}} className='text-end my-2'>조회수 : {form.viewcnt}</Col>
+                                <Col style={{width: '5%'}} className='text-end'>조회수 : {form.viewcnt}</Col>
                             </Row>
                         </CardHeader>
                         <CardBody style={{whiteSpace:"pre-wrap"}}>
@@ -58,6 +61,7 @@ const ReadPaget = () => {
                 </Col>
             </Row>
         </div>
+        <ReplyPage bid={bid}/>
     </Container>
   )
 }
