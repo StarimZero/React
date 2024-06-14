@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Container, Button, Row, Col, Form } from 'react-bootstrap'
 import Pagination from 'react-js-pagination';
 import { useLocation } from 'react-router-dom';
+import Stars from '../common/Stars';
 
 const ReplyPage = ({bid}) => {
     
@@ -14,6 +15,7 @@ const ReplyPage = ({bid}) => {
     const [count, setCount] = useState(0);
     const [page, setPage] = useState(1);
     const [size, setSize] = useState(4);
+    const [rating, setRating] = useState(0);
 
 
 
@@ -21,7 +23,7 @@ const ReplyPage = ({bid}) => {
         const url = `/reply/list.json/${bid}?page=${page}&size=${size}`;
         const res = await axios.get(url);
         console.log(res.data)
-        const data=res.data.documents.map(doc=>doc && {...doc, isEllip:true, text:doc.contents});
+        const data=res.data.documents.map(doc=>doc && {...doc, isEllip:true, text:doc.contents, num:doc.rating});
         setList(data);
         setCount(res.data.total);
     }
@@ -44,8 +46,9 @@ const ReplyPage = ({bid}) => {
         }
         if(!window.confirm("댓글을 등록하시겠습니까?")) return;
 
-        await axios.post(`/reply/insert`, {bid, uid:sessionStorage.getItem("uid"), contents});
+        await axios.post(`/reply/insert`, {bid, uid:sessionStorage.getItem("uid"), contents, rating});
         setContents("");
+        setRating(0);
         callAPI();
     }
 
@@ -72,11 +75,11 @@ const ReplyPage = ({bid}) => {
     }
 
     const onClickSave = async (reply) => {
-        if(reply.contents===reply.text){
+        if(reply.contents===reply.text && reply.num===reply.rating){
             alert("수정된 내용이없습니다.")
         }else{
             if(!window.confirm(`${reply.rid}번 댓글을 수정하시겠습니까?`)) return;
-            await axios.post('/reply/update', {rid:reply.rid, contents:reply.contents});
+            await axios.post('/reply/update', {rid:reply.rid, contents:reply.contents, rating:reply.rating});
             callAPI();
         }
     }
@@ -85,6 +88,21 @@ const ReplyPage = ({bid}) => {
         if(!window.confirm("댓글수정을 취소하시겠습니까?")) return;
         callAPI();
     }
+
+
+    const getRating = (rating) => {
+        console.log("몇점입니까요?", rating);
+        setRating(rating);
+        
+    }
+
+    const getReplyRating = (rid, rating) =>{
+        console.log("별점은===>", rating, "댓글아이디는===>", rid)
+        const data = list.map(reply=>reply.rid===rid ? {...reply, rating:rating}: reply);
+        setList(data);
+    }
+
+
 
   return (
     <Container className='mb-5'>
@@ -95,6 +113,7 @@ const ReplyPage = ({bid}) => {
                         <Row>
                             <Col>
                                 <h5>[{bid}번글] 댓글쓰기</h5>
+                                <span><Stars number={rating} getRating={getRating} /></span>
                             </Col>
                             <Col className='text-end'>
                                 <span>총댓글수 : {count}</span>
@@ -125,7 +144,8 @@ const ReplyPage = ({bid}) => {
                         <div key={reply.rid}>
                             <Row>
                                 <Col className='text-muted' lg={6}>
-                                    <span>{reply.uid}({reply.uname}) </span>                                    
+                                    <span>{reply.rid}{reply.uid}({reply.uname}) </span>  
+                                    <span><Stars size={"20px"}  number={reply.rating} disabled={(reply.uid!==uid || !reply.isEdit) && true} getRating={(e)=>getReplyRating(reply.rid, e)} /></span>  <br/>                              
                                     <span>{reply.fmtdate}</span>
                                 </Col>
                                 <Col className='text-end'>
