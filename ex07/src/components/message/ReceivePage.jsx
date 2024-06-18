@@ -1,0 +1,96 @@
+import React, { useEffect, useState } from 'react'
+import { Container, Table, Button, Row, Col } from 'react-bootstrap'
+import axios from 'axios'
+
+const ReceivePage = () => {
+
+    const uid = sessionStorage.getItem("uid");
+    const [list, setList] = useState([]);
+
+    const [checked, setChecked] = useState(0);
+    useEffect(()=>{
+        let cnt=0;
+        list.forEach(msg=>msg.checked && cnt++);
+        setChecked(cnt);
+    },[list])
+
+
+    const callAPI = async () => {
+        const res= await axios.get(`/message/receive.json/${uid}`);
+        const data = res.data.map(msg=>msg && {...msg, checked:false});
+        console.log(data);
+        setList(data);
+    }
+
+    const onChangeAll = (e) => {
+        const data=list.map(msg=>msg && {...msg, checked:e.target.checked});
+        setList(data);
+    }
+
+    const onChangeSingle = (e, mid) => {
+        const data = list.map(msg => msg.mid===mid ? {...msg, checked:e.target.checked} : msg);
+        setList(data);
+    }
+
+    const onDelete = () => {
+        if(checked===0){
+            alert("삭제할 메세지를 선택하세요")
+            return;
+        }
+        if(!window.confirm("삭제하시겠습니까?")) return;
+        let cnt=0;
+        list.forEach(async(msg)=>{
+            if(msg.checked){   
+            await axios.post(`/message/receive/delete/${msg.mid}`);
+            cnt++;
+            }
+            if(cnt===checked) callAPI();
+        });
+    }
+
+
+
+    useEffect(()=>{
+    callAPI();
+    },[])
+
+
+
+    return (
+        <Container>
+            <div className='text-center my-5'>
+                <h1>받은거</h1>
+            </div>
+            <Button onClick={onDelete}>선택삭제</Button>
+            <Table striped="columns">
+                <thead>
+                    <tr className='text-center'>
+                        <td><input type="checkbox" onChange={onChangeAll} checked={list.length >0 && checked===list.length} /></td>
+                        <td>id</td>
+                        <td>보낸이</td>
+                        <td>내용</td>
+                        <td>발신일</td>
+                        <td>수신일</td>
+                        <td>S</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {list.map(msg=>
+                        <tr key={msg.key} className='text-center'>
+                            <td><input type="checkbox" checked={msg.checked} onChange={(e)=>onChangeSingle(e, msg.mid)}/></td>
+                            <td>{msg.mid}</td>
+                            <td>{msg.sender}({msg.uname})</td>
+                            <td><a href={`/message/receive/${msg.mid}`}><div className={msg.readDate ? "ellipsis1" : "ellipsis1 read"} style={{textDecoration: 'none', color:"black"}}>{msg.message}</div></a></td>
+                            <td>{msg.sendDate}</td>
+                            <td>{msg.readDate || "수신대기중"}</td>
+                            <td>{msg.sendDelete}</td>
+                        </tr>
+                    )}
+
+                </tbody>
+            </Table>
+        </Container>
+    )
+ }
+
+export default ReceivePage
