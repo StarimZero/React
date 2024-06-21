@@ -2,19 +2,30 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Container, Card, Row, Col, Table, Button } from 'react-bootstrap'
 import { Link, useParams } from 'react-router-dom'
+import EnrollList from './EnrollList';
+
 
 const ReadPage = () => {
 
     const {scode} = useParams();
 
+
     const [student, setStudent] = useState("");
     const {sname, dept, birthday, advisor, year, pname} = student;
-
+    const [list, setList] = useState([]);
 
     const callAPI= async () => {
         const res = await axios.get(`/stu/${scode}`);
         console.log(res.data)
         setStudent(res.data);
+        callCourses();
+
+    }
+
+    const callCourses = async () => {
+        const res1 = await axios.get(`/enroll/scode/${scode}`)
+        console.log(res1.data)
+        setList(res1.data);
     }
 
     
@@ -31,6 +42,7 @@ const ReadPage = () => {
                 <Card>
                     <Card.Header>
                         <h3 className='text-center'>{scode} 학생정보</h3>
+                        
                     </Card.Header>
                     <Card.Body>
                         <Table>
@@ -66,6 +78,12 @@ const ReadPage = () => {
                         <Link to ={`/stu/update/${scode}`}><Button style={{width:"100%"}} variant='warning'>정보수정하기</Button></Link>
                     </Card.Footer>
                 </Card>
+            </Col>
+        </Row>
+        <hr/>
+        <Row>
+            <Col>
+                <EnrollList list={list} scode={scode} callCourses={callCourses}/>
             </Col>
         </Row>
     </Container>
