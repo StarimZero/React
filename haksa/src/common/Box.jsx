@@ -19,6 +19,11 @@ const onAction = () => {
     onClose();
 }
 
+//아니어
+const onCancel = () => {
+  setBox({...box,show:false});
+}
+
 
 
 
@@ -49,7 +54,7 @@ const onAction = () => {
         <Modal.Footer>
             {box.action ? 
                 <>
-                    <Button variant="outline-secondary" onClick={onClose}>아니오?</Button>
+                    <Button variant="outline-secondary" onClick={onCancel}>아니오?</Button>
                     <Button variant="outline-primary" className='px-4' onClick={onAction}>예?</Button>
                 </>
 
