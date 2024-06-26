@@ -21,7 +21,7 @@ const SearchPage = () => {
         const res = await axios.get(`/goods/search?query=${query}&page=${page}&size=${size}`)
         console.log(res.data)
         setGoods(res.data.items);
-        const data = res.data.items.map(good => good && {...good, checked:false});
+        const data = res.data.items.map(good => good && {...good, checked:false, title:removeTags(good.title)});
         setGoods(data);
         setCount(res.data.total > 100 && 100);
     }
@@ -56,7 +56,7 @@ const SearchPage = () => {
             action: async()=>{
                 const res = await axios.post(`/goods/insert`, {
                     gid:good.productId,
-                    title:good.title,
+                    title:removeTags(good.title),
                     image:good.image,
                     maker:good.maker,
                     brand:good.brand,
@@ -97,7 +97,7 @@ const SearchPage = () => {
                     if(good.checked){
                         const res = await axios.post(`/goods/insert`, {
                             gid:good.productId,
-                            title:good.title,
+                            title:removeTags(good.title),
                             image:good.image,
                             maker:good.maker,
                             brand:good.brand,
@@ -120,6 +120,19 @@ const SearchPage = () => {
             }
         })
     }
+
+
+    const onClickImage = async (image) => {
+        if(!window.confirm(`이미지를 다운로드하시겠습니까?`)) return;
+        await axios.post(`/download?file=${image}`)
+        alert("다운로드하였습니다.")
+    }
+
+    const removeTags = (html) => {
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        return doc.body.textContent || "";
+    }
+
 
   return (
     <Container>
@@ -154,7 +167,7 @@ const SearchPage = () => {
                         {goods.map(good=>
                             <tr key={good.productId}>
                                 <td><Form.Check checked={good.checked} onChange={(e)=>onChangeSingle(e,good.productId)} /></td>
-                                <td ><img src={good.image} width={"50px"} /> </td>
+                                <td ><img src={good.image} width={"50px"} onClick={()=>onClickImage(good.image)} /> </td>
                                 <td><div dangerouslySetInnerHTML={{__html:good.title}}></div></td>
                                 <td>{good.lprice}</td>
                                 <td>{good.brand}</td>
@@ -175,6 +188,11 @@ const SearchPage = () => {
                     onChange={(e)=>setPage(e)}/>
                 }
             </Col>
+        </Row>
+        <Row>
+            <div>
+                <p>이미지를 누르면 다운로드됩니다.</p>
+            </div>
         </Row>
     </Container>
   )

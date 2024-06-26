@@ -4,6 +4,7 @@ import { Container, Row, Col, Button, Table, Form } from 'react-bootstrap'
 import '../../common/Paging.css'
 import Pagination from 'react-js-pagination';
 import { BoxContext } from '../../common/BoxContext';
+import { Link } from 'react-router-dom';
 
 const ListPage = () => {
 
@@ -106,8 +107,8 @@ const ListPage = () => {
                         {goods.map(good=>
                             <tr key={good.gid} className='align-middle'>
                                 <td><Form.Check checked={good.checked} onChange={(e)=>onChangeSingle(e, good.gid)}  /></td>
-                                <td><img src={good.image} width={"150px"}/></td>
-                                <td><div dangerouslySetInnerHTML={{__html:good.title}}></div> </td>
+                                <td><Link to={`update/${good.gid}`}><img src={good.image || "http://via.placeholder.com/150x150"} width={"150px"}/></Link></td>
+                                <td><div>{good.title}</div> </td>
                                 <td> {good.fmtprice}원</td>
                                 <td>{good.fmtdate}</td>
                                 <td ><Button variant='outline-danger' onClick={()=>onDelete(good.gid)}>상품삭제</Button></td>

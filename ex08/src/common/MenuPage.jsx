@@ -1,4 +1,4 @@
-import { Button, Row, Col } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import RouterPage from '../routers/RouterPage'
