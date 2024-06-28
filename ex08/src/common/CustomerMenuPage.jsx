@@ -6,11 +6,7 @@ import { FaHome } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
 import Header from './Header';
 
-
-
-const MenuPage = () => {
-
-  
+const CustomerMenuPage = () => {
 
     const onClickLogout = (e) => {
         e.preventDefault();
@@ -19,13 +15,15 @@ const MenuPage = () => {
         window.location.reload();
     }
 
+
+
   return (
     <>
         <Row>
             <Col lg={1} style={{background:"black"}}>
             </Col>
             <Col lg={10} style={{background:"black"}}>
-                <h1 className='text-center' style={{color:"red"}}>관리자페이지입니다.</h1>
+                <Header/>
             </Col>
             <Col lg={1} style={{background:"black"}}>
             </Col>
@@ -38,8 +36,8 @@ const MenuPage = () => {
             {sessionStorage.getItem("uid") ?
                 <>
                     <Col>
-                        <Link to="goods/search"><Button size='sm' variant='outline-primary' className='me-4'>상품검색</Button></Link>
-                        <Link to="goods/list"><Button size='sm' variant='outline-danger'>상품목록</Button></Link>
+                        <Link to="/goods/cart"><Button size='sm' variant='outline-primary' className='me-4'>주문목록</Button></Link>
+                        <Link to="/orders/list"><Button size='sm' variant='outline-danger'>장바구니</Button></Link>
                     </Col>
                     <Col className='text-end me-5'>
                         <Link to="/"><Button size='sm' variant='outline-danger' onClick={onClickLogout} className='me-3'>로그아웃</Button></Link>
@@ -65,4 +63,4 @@ const MenuPage = () => {
   )
 }
 
-export default MenuPage
+export default CustomerMenuPage

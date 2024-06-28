@@ -1,29 +1,30 @@
-import React from 'react'
-import { Container } from 'react-bootstrap'
+import React, { useEffect, useState } from 'react'
+import { Col, Container, Row } from 'react-bootstrap'
+import Recently from './Recently'
+import axios from 'axios';
 
 const HomePage = () => {
+
+  const [goods, setGoods] = useState([]);
+
+
+    const callAPI = async () => {
+        const res = await axios.get(`/goods/list?page=1&size=10`);
+        console.log(res.data);
+        setGoods(res.data.list);
+    }
+
+    useEffect(()=>{
+        callAPI();
+    },[])
+
   return (
     <Container>
-        <div>
-            <h1>홈페이지공사중</h1>
-            <hr/>
-            <h1>홈페이지공사중</h1>
-            <hr/>
-            <h1>홈페이지공사중</h1>
-            <hr/>
-            <h1>홈페이지공사중</h1>
-            <hr/>
-            <h1>홈페이지공사중</h1>
-            <hr/>
-            <h1>홈페이지공사중</h1>
-            <hr/>
-            <h1>홈페이지공사중</h1>
-            <hr/>
-            <h1>홈페이지공사중</h1>
-            <hr/>
-            <h1>홈페이지공사중</h1>
-            <hr/>
-        </div>
+        <Row>
+            <Col>
+                <Recently goods={goods}/>
+            </Col>
+        </Row>    
     </Container>
   )
 }

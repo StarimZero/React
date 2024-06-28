@@ -1,0 +1,17 @@
+.slick-arrow.slick-prev,
+.slick-arrow.slick-next {
+ background: #6200ff; width: 50px; height: 300px; display: flex; align-items: center; justify-content: center; z-index: 1; border-radius: 10%; opacity: 50%; margin: 0px 30px;
+}
+.slick-prev::before,
+.slick-next::before {
+ display: none;
+}
+.slick-dots {
+ bottom: 20px;
+}
+.slick-dots li button::before{
+ color: rgb(255, 0, 0); opacity: 100%;
+}
+.slick-dots li.slick-active button::before{
+ color: rgb(252, 0, 0);
+}

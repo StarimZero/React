@@ -8,6 +8,9 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import CustomerMenuPage from './common/CustomerMenuPage';
 
 function App() {
 
@@ -17,11 +20,22 @@ function App() {
         action : null
     });
 
+    const [user, setUser] = useState({
+      uid:"",
+      uname:""
+    })
+
   return (
-    <BoxContext.Provider value={{box, setBox}}>
-        <div>
-            <MenuPage/>
-        </div>
+    <BoxContext.Provider value={{box, setBox, user, setUser}}>
+        {sessionStorage.getItem("uid")==="admin" ?
+            <div>
+                <MenuPage/>
+            </div>
+            :
+            <div>
+                <CustomerMenuPage/>
+            </div>
+        }
         {box.show && <Box box={box} setBox={setBox}/>}
     </BoxContext.Provider>
   );

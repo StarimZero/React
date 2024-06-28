@@ -11,7 +11,7 @@ const SearchPage = () => {
 
     const {setBox} = useContext(BoxContext);
     const [page, setPage] = useState(1);
-    const [query, setQuery] = useState("윈터트러플");
+    const [query, setQuery] = useState("레고");
     const [goods, setGoods] = useState([]);
     const [size] = useState(5);
     const [count, setCount] = useState(0);
